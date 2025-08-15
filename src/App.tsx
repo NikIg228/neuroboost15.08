@@ -5,6 +5,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
+import RouteScrollToTop from './components/RouteScrollToTop';
 import ScrollToTopButton from './components/ScrollToTop';
 import Home from './pages/Home';
 import Catalog from './pages/Catalog';
@@ -23,6 +24,7 @@ function App() {
   return (
     <AuthProvider>
       <Router>
+        <RouteScrollToTop />
         <div className="min-h-screen bg-gray-50">
           <ScrollToTop />
           <Header />
