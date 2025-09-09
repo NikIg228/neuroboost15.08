@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import AnimatedSection from '../components/AnimatedSection'
@@ -6,6 +6,7 @@ import GoogleButton from '../components/GoogleButton'
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react'
 
 const Login: React.FC = () => {
+  useEffect(() => { window.scrollTo({ top: 0, left: 0, behavior: 'auto' }); }, []);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
