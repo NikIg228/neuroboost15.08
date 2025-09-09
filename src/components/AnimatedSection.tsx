@@ -1,67 +1,90 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
+import { motion, useInView } from 'framer-motion';
+import { useRef } from 'react';
 
 interface AnimatedSectionProps {
   children: React.ReactNode;
-  className?: string;
-  direction?: 'up' | 'down' | 'left' | 'right';
   delay?: number;
+  direction?: 'up' | 'down' | 'left' | 'right' | 'fade' | 'scale';
+  className?: string;
+  style?: React.CSSProperties;
+  duration?: number;
+  once?: boolean;
 }
 
 const AnimatedSection: React.FC<AnimatedSectionProps> = ({ 
   children, 
-  className = '', 
+  delay = 0, 
   direction = 'up',
-  delay = 0 
+  className = '',
+  style = {},
+  duration = 0.6,
+  once = true
 }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once, margin: "-100px" });
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => setIsVisible(true), delay);
+  const getVariants = () => {
+    const baseVariants = {
+      hidden: { opacity: 0 },
+      visible: { 
+        opacity: 1,
+        transition: {
+          duration,
+          delay: delay / 1000,
+          ease: [0.25, 0.46, 0.45, 0.94]
         }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
       }
     };
-  }, [delay]);
-
-  const getTransformClasses = () => {
-    const baseClasses = 'transition-all duration-700 ease-out';
-    
-    if (isVisible) {
-      return `${baseClasses} transform translate-x-0 translate-y-0 opacity-100`;
-    }
 
     switch (direction) {
       case 'up':
-        return `${baseClasses} transform translate-y-8 opacity-0`;
+        return {
+          ...baseVariants,
+          hidden: { ...baseVariants.hidden, y: 60 },
+          visible: { ...baseVariants.visible, y: 0 }
+        };
       case 'down':
-        return `${baseClasses} transform -translate-y-8 opacity-0`;
+        return {
+          ...baseVariants,
+          hidden: { ...baseVariants.hidden, y: -60 },
+          visible: { ...baseVariants.visible, y: 0 }
+        };
       case 'left':
-        return `${baseClasses} transform translate-x-8 opacity-0`;
+        return {
+          ...baseVariants,
+          hidden: { ...baseVariants.hidden, x: 60 },
+          visible: { ...baseVariants.visible, x: 0 }
+        };
       case 'right':
-        return `${baseClasses} transform -translate-x-8 opacity-0`;
+        return {
+          ...baseVariants,
+          hidden: { ...baseVariants.hidden, x: -60 },
+          visible: { ...baseVariants.visible, x: 0 }
+        };
+      case 'scale':
+        return {
+          ...baseVariants,
+          hidden: { ...baseVariants.hidden, scale: 0.8 },
+          visible: { ...baseVariants.visible, scale: 1 }
+        };
+      case 'fade':
       default:
-        return `${baseClasses} transform translate-y-8 opacity-0`;
+        return baseVariants;
     }
   };
 
   return (
-    <div ref={ref} className={`${getTransformClasses()} ${className}`}>
+    <motion.div
+      ref={ref}
+      variants={getVariants()}
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
+      className={className}
+      style={style}
+    >
       {children}
-    </div>
+    </motion.div>
   );
 };
 

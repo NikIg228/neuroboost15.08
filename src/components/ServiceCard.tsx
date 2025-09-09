@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabase';
 import { Service } from '../types';
@@ -82,31 +83,51 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   };
 
   return (
-    <div
-      className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer group transform hover:-translate-y-2 relative overflow-hidden h-full flex flex-col"
+    <motion.div
+      className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer group relative overflow-hidden h-full flex flex-col"
       onClick={onClick}
+      whileHover={{ 
+        y: -8,
+        scale: 1.02,
+        transition: { duration: 0.3, ease: "easeOut" }
+      }}
+      whileTap={{ scale: 0.98 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
     >
       {/* Top section with favorite button and badge */}
       <div className="relative p-4 pb-0">
         {/* Favorite Button - moved to top left */}
-        <button
+        <motion.button
           onClick={handleFavoriteClick}
           disabled={favoriteLoading}
           className={`absolute top-2 left-2 p-2 rounded-full transition-all duration-200 z-20 ${
             isFavorite 
               ? 'bg-red-500 text-white shadow-lg' 
               : 'bg-white/90 text-gray-400 hover:text-red-500 hover:bg-white shadow-md'
-          } ${favoriteLoading ? 'opacity-50 cursor-not-allowed' : 'hover:scale-110'}`}
+          } ${favoriteLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          animate={{ 
+            scale: isFavorite ? [1, 1.2, 1] : 1,
+            transition: { duration: 0.3 }
+          }}
         >
           <Heart className={`h-4 w-4 ${isFavorite ? 'fill-current' : ''}`} />
-        </button>
+        </motion.button>
 
         {/* Badge - moved higher and adjusted positioning */}
         {badge && (
-          <div className={`absolute top-2 right-2 ${badgeColor} text-white px-2 py-1 rounded-full text-xs font-semibold z-10 shadow-lg`}>
+          <motion.div 
+            className={`absolute top-2 right-2 ${badgeColor} text-white px-2 py-1 rounded-full text-xs font-semibold z-10 shadow-lg`}
+            initial={{ scale: 0, rotate: -180 }}
+            animate={{ scale: 1, rotate: 0 }}
+            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+          >
             <span className="mr-1">{getBadgeIcon(badge)}</span>
             {badge}
-          </div>
+          </motion.div>
         )}
       </div>
 
@@ -140,38 +161,47 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
             </div>
           </div>
           <div className="flex gap-2">
-            <button 
-              className="flex-1 px-3 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 transform hover:scale-105 shadow-lg text-sm"
+            <motion.button 
+              className="flex-1 px-3 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg shadow-lg text-sm"
               onClick={(e) => {
                 e.stopPropagation();
                 onPurchase();
               }}
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 300 }}
             >
               Купить
-            </button>
-            <button 
-              className="px-3 py-2 border border-green-600 text-green-600 font-semibold rounded-lg hover:bg-green-50 transition-all duration-200 text-sm flex items-center"
+            </motion.button>
+            <motion.button 
+              className="px-3 py-2 border border-green-600 text-green-600 font-semibold rounded-lg text-sm flex items-center"
               onClick={(e) => {
                 e.stopPropagation();
                 onConsultation();
               }}
+              whileHover={{ scale: 1.05, y: -2, backgroundColor: "#f0fdf4" }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 300 }}
             >
               <MessageCircle className="h-4 w-4 mr-1" />
               Консультация
-            </button>
+            </motion.button>
           </div>
-          <button 
-            className="w-full mt-2 px-3 py-2 border border-blue-600 text-blue-600 font-semibold rounded-lg hover:bg-blue-50 transition-all duration-200 text-sm"
-              onClick={(e) => {
-                e.stopPropagation();
-                onClick();
-              }}
-            >
-              Подробнее
-            </button>
+          <motion.button 
+            className="w-full mt-2 px-3 py-2 border border-blue-600 text-blue-600 font-semibold rounded-lg text-sm"
+            onClick={(e) => {
+              e.stopPropagation();
+              onClick();
+            }}
+            whileHover={{ scale: 1.02, y: -1, backgroundColor: "#eff6ff" }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
+            Подробнее
+          </motion.button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Smooth scroll styles */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Улучшенный плавный скролл для всех браузеров */
+* {
+  scroll-behavior: smooth;
+}
+
+/* Оптимизация производительности скролла */
+body {
+  -webkit-overflow-scrolling: touch;
+  overflow-x: hidden;
+}
+
+/* Плавный скролл для якорных ссылок */
+html {
+  scroll-padding-top: 80px; /* Отступ для фиксированной шапки */
+}

@@ -4,7 +4,6 @@ import { AuthProvider } from './contexts/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import ScrollToTop from './components/ScrollToTop';
 import ScrollToTopButton from './components/ScrollToTop';
 import Home from './pages/Home';
 import Catalog from './pages/Catalog';
@@ -24,18 +23,13 @@ function App() {
     <AuthProvider>
       <Router>
         <div className="min-h-screen bg-gray-50">
-          <ScrollToTop />
           <Header />
           <main>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/catalog" element={
-                <ProtectedRoute>
-                  <Catalog />
-                </ProtectedRoute>
-              } />
+              <Route path="/catalog" element={<Catalog />} />
               <Route path="/lk" element={
                 <ProtectedRoute>
                   <Profile />

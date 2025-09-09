@@ -1,12 +1,14 @@
 import React from 'react';
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
 import { Brain, MessageCircle } from 'lucide-react';
 import ConsultationModal from './ConsultationModal';
 
 const Header: React.FC = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { user, signOut } = useAuth();
   const [isConsultationModalOpen, setIsConsultationModalOpen] = useState(false);
 
@@ -29,40 +31,73 @@ const Header: React.FC = () => {
     setIsConsultationModalOpen(true);
   };
 
+  const handleLinkClick = (path: string) => {
+    // Прокручиваем к верху страницы
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+    // Переходим по ссылке
+    navigate(path);
+  };
+
   return (
     <>
-      <header className="bg-white/95 backdrop-blur-sm shadow-sm sticky top-0 z-50 transition-all duration-300">
+      <motion.header 
+        className="bg-white/95 backdrop-blur-sm shadow-sm sticky top-0 z-50 transition-all duration-300"
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <Link to="/" className="flex items-center space-x-3 group">
-            <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-2 rounded-lg group-hover:scale-105 transition-transform duration-200">
+          <motion.button 
+            onClick={() => handleLinkClick('/')} 
+            className="flex items-center space-x-3 group"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <motion.div 
+              className="bg-gradient-to-r from-blue-600 to-purple-600 p-2 rounded-lg"
+              whileHover={{ 
+                scale: 1.1,
+                rotate: 360,
+                transition: { duration: 0.5 }
+              }}
+            >
               <Brain className="h-6 w-6 text-white" />
-            </div>
+            </motion.div>
             <div>
               <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 NeuroBoost
               </span>
             </div>
-          </Link>
+          </motion.button>
 
           <nav className="hidden md:flex space-x-8">
-            {navItems.map((item) => (
-              <Link
+            {navItems.map((item, index) => (
+              <motion.button
                 key={item.path}
-                to={item.path}
+                onClick={() => handleLinkClick(item.path)}
                 className={`text-sm font-medium transition-colors duration-200 hover:text-blue-600 relative group ${
                   location.pathname === item.path
                     ? 'text-blue-600'
                     : 'text-gray-700'
                 }`}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1, duration: 0.3 }}
+                whileHover={{ y: -2 }}
               >
                 {item.label}
-                <span 
-                  className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-200 group-hover:w-full ${
-                    location.pathname === item.path ? 'w-full' : ''
+                <motion.span 
+                  className={`absolute -bottom-1 left-0 h-0.5 bg-blue-600 ${
+                    location.pathname === item.path ? 'w-full' : 'w-0'
                   }`}
+                  whileHover={{ width: "100%" }}
+                  transition={{ duration: 0.3 }}
                 />
-              </Link>
+              </motion.button>
             ))}
           </nav>
 
@@ -76,12 +111,12 @@ const Header: React.FC = () => {
                   <MessageCircle className="h-4 w-4 mr-1" />
                   Консультация
                 </button>
-                <Link
-                  to="/lk"
+                <button
+                  onClick={() => handleLinkClick('/lk')}
                   className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
                 >
                   Личный кабинет
-                </Link>
+                </button>
                 <button
                   onClick={handleSignOut}
                   className="text-sm font-medium text-gray-700 hover:text-red-600 transition-colors"
@@ -98,18 +133,18 @@ const Header: React.FC = () => {
                   <MessageCircle className="h-4 w-4 mr-1" />
                   Консультация
                 </button>
-                <Link
-                  to="/login"
+                <button
+                  onClick={() => handleLinkClick('/login')}
                   className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
                 >
                   Войти
-                </Link>
-                <Link
-                  to="/register"
+                </button>
+                <button
+                  onClick={() => handleLinkClick('/register')}
                   className="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-medium rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all"
                 >
                   Регистрация
-                </Link>
+                </button>
               </div>
             )}
             
@@ -123,7 +158,7 @@ const Header: React.FC = () => {
           </div>
         </div>
       </div>
-      </header>
+      </motion.header>
 
       <ConsultationModal
         isOpen={isConsultationModalOpen}

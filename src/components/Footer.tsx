@@ -1,12 +1,14 @@
 import React from 'react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
-import { Brain, Mail, Phone, MapPin, MessageCircle, Shield, CreditCard } from 'lucide-react';
+import { Brain, Mail, Phone, MessageCircle, Shield } from 'lucide-react';
 import ConsultationModal from './ConsultationModal';
 
 const Footer: React.FC = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [isConsultationModalOpen, setIsConsultationModalOpen] = useState(false);
 
   const handleConsultation = () => {
@@ -15,6 +17,16 @@ const Footer: React.FC = () => {
       return;
     }
     setIsConsultationModalOpen(true);
+  };
+
+  const handleLinkClick = (path: string) => {
+    // Прокручиваем к верху страницы
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+    // Переходим по ссылке
+    navigate(path);
   };
 
   const paymentSystems = [
@@ -26,16 +38,35 @@ const Footer: React.FC = () => {
 
   return (
     <>
-      <footer className="bg-gray-900 text-white">
+      <motion.footer 
+        className="bg-gray-900 text-white"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        viewport={{ once: true }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="col-span-1 md:col-span-2">
-              <div className="flex items-center space-x-3 mb-4">
-                <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-2 rounded-lg">
+              <motion.div 
+                className="flex items-center space-x-3 mb-4"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2, duration: 0.6 }}
+                viewport={{ once: true }}
+              >
+                <motion.div 
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 p-2 rounded-lg"
+                  whileHover={{ 
+                    scale: 1.1,
+                    rotate: 360,
+                    transition: { duration: 0.5 }
+                  }}
+                >
                   <Brain className="h-6 w-6 text-white" />
-                </div>
+                </motion.div>
                 <span className="text-xl font-bold">NeuroBoost</span>
-              </div>
+              </motion.div>
               <p className="text-gray-400 mb-4 max-w-md">
                 Мы помогаем бизнесам внедрять ИИ-решения для автоматизации процессов, 
                 увеличения продаж и повышения эффективности работы.
@@ -71,24 +102,36 @@ const Footer: React.FC = () => {
               <h3 className="text-lg font-semibold mb-4">Услуги</h3>
               <ul className="space-y-2">
                 <li>
-                  <Link to="/catalog" className="text-gray-400 hover:text-white transition-colors">
+                  <button 
+                    onClick={() => handleLinkClick('/catalog')} 
+                    className="text-gray-400 hover:text-white transition-colors text-left"
+                  >
                     AI-Аудит бизнеса
-                  </Link>
+                  </button>
                 </li>
                 <li>
-                  <Link to="/catalog" className="text-gray-400 hover:text-white transition-colors">
+                  <button 
+                    onClick={() => handleLinkClick('/catalog')} 
+                    className="text-gray-400 hover:text-white transition-colors text-left"
+                  >
                     ChatGPT-консультант
-                  </Link>
+                  </button>
                 </li>
                 <li>
-                  <Link to="/catalog" className="text-gray-400 hover:text-white transition-colors">
+                  <button 
+                    onClick={() => handleLinkClick('/catalog')} 
+                    className="text-gray-400 hover:text-white transition-colors text-left"
+                  >
                     Автоматизация заявок
-                  </Link>
+                  </button>
                 </li>
                 <li>
-                  <Link to="/catalog" className="text-gray-400 hover:text-white transition-colors">
+                  <button 
+                    onClick={() => handleLinkClick('/catalog')} 
+                    className="text-gray-400 hover:text-white transition-colors text-left"
+                  >
                     Все услуги
-                  </Link>
+                  </button>
                 </li>
               </ul>
             </div>
@@ -97,24 +140,36 @@ const Footer: React.FC = () => {
               <h3 className="text-lg font-semibold mb-4">Юридическая информация</h3>
               <ul className="space-y-2">
                 <li>
-                  <Link to="/privacy-policy" className="text-gray-400 hover:text-white transition-colors">
+                  <button 
+                    onClick={() => handleLinkClick('/privacy-policy')} 
+                    className="text-gray-400 hover:text-white transition-colors text-left"
+                  >
                     Политика конфиденциальности
-                  </Link>
+                  </button>
                 </li>
                 <li>
-                  <Link to="/public-offer" className="text-gray-400 hover:text-white transition-colors">
+                  <button 
+                    onClick={() => handleLinkClick('/public-offer')} 
+                    className="text-gray-400 hover:text-white transition-colors text-left"
+                  >
                     Публичная оферта
-                  </Link>
+                  </button>
                 </li>
                 <li>
-                  <Link to="/consent" className="text-gray-400 hover:text-white transition-colors">
+                  <button 
+                    onClick={() => handleLinkClick('/consent')} 
+                    className="text-gray-400 hover:text-white transition-colors text-left"
+                  >
                     Согласие на обработку данных
-                  </Link>
+                  </button>
                 </li>
                 <li>
-                  <Link to="/telegram-agreement" className="text-gray-400 hover:text-white transition-colors">
+                  <button 
+                    onClick={() => handleLinkClick('/telegram-agreement')} 
+                    className="text-gray-400 hover:text-white transition-colors text-left"
+                  >
                     Пользовательское соглашение Telegram-бота
-                  </Link>
+                  </button>
                 </li>
               </ul>
             </div>
@@ -128,7 +183,6 @@ const Footer: React.FC = () => {
                 <div className="flex items-center space-x-4">
                   {paymentSystems.map((system, index) => (
                     <div key={index} className="flex items-center space-x-1 text-gray-400">
-                      <span className="text-lg">{system.icon}</span>
                       <span className="text-sm">{system.name}</span>
                     </div>
                   ))}
@@ -145,7 +199,7 @@ const Footer: React.FC = () => {
             <p>&copy; 2025 NeuroBoost. Все права защищены.</p>
           </div>
         </div>
-      </footer>
+      </motion.footer>
 
       <ConsultationModal
         isOpen={isConsultationModalOpen}
