@@ -1,5 +1,4 @@
 import React from 'react';
-import AnimatedSection from './AnimatedSection';
 
 const PartnersSection: React.FC = () => {
   const partners = [
@@ -12,54 +11,63 @@ const PartnersSection: React.FC = () => {
   ];
 
   return (
-    <section className="py-16 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <AnimatedSection>
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Нам <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">доверяют</span>
-            </h2>
-            <p className="text-xl text-gray-600">
-              Ведущие компании выбирают наши ИИ-решения
-            </p>
-          </div>
-        </AnimatedSection>
+    <section className="py-16 sm:py-20 bg-gradient-to-br from-white via-gray-50 to-blue-50 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-900 to-purple-900 bg-clip-text text-transparent mb-4 sm:mb-6">
+            Нам <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">доверяют</span>
+          </h2>
+          <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+            Ведущие компании выбирают наши ИИ-решения
+          </p>
+        </div>
 
-        <AnimatedSection delay={300}>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
-            {partners.map((partner, index) => (
-              <div
-                key={partner.name}
-                className="flex items-center justify-center p-4 grayscale hover:grayscale-0 transition-all duration-300 transform hover:scale-110"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <img
-                  src={partner.logo}
-                  alt={`${partner.name} logo`}
-                  className="h-12 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity duration-300"
-                  onError={(e) => {
-                    // Fallback to text if image fails to load
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                    const textElement = document.createElement('div');
-                    textElement.className = 'text-gray-600 font-semibold text-lg';
-                    textElement.textContent = partner.name;
-                    target.parentNode?.appendChild(textElement);
-                  }}
-                />
-              </div>
-            ))}
-          </div>
-        </AnimatedSection>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 sm:gap-8 items-center">
+          {partners.map((partner) => (
+            <div
+              key={partner.name}
+              className="group flex items-center justify-center p-4 sm:p-6 bg-white/60 backdrop-blur-sm rounded-2xl border border-white/50 hover:bg-white/80 transition-all duration-500 hover:scale-105 hover:shadow-lg"
+            >
+              <img
+                src={partner.logo}
+                alt={`${partner.name} logo`}
+                className="h-8 sm:h-10 w-auto object-contain opacity-60 group-hover:opacity-100 transition-all duration-300 grayscale group-hover:grayscale-0"
+                onError={(e) => {
+                  // Fallback to text if image fails to load
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                  const textElement = document.createElement('div');
+                  textElement.className = 'text-gray-600 font-semibold text-sm sm:text-base text-center group-hover:text-gray-800 transition-colors duration-300';
+                  textElement.textContent = partner.name;
+                  target.parentNode?.appendChild(textElement);
+                }}
+              />
+            </div>
+          ))}
+        </div>
 
-        <AnimatedSection delay={600}>
-          <div className="text-center mt-12">
-            <p className="text-gray-600 text-lg">
-              Присоединяйтесь к <span className="font-semibold text-blue-600">100+</span> компаниям, 
+        <div className="text-center mt-12 sm:mt-16">
+          <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-white/50 shadow-xl">
+            <p className="text-base sm:text-lg lg:text-xl text-gray-600 mb-4">
+              Присоединяйтесь к <span className="font-bold text-blue-600 text-xl sm:text-2xl">100+</span> компаниям, 
               которые уже используют наши ИИ-решения
             </p>
+            <div className="flex justify-center space-x-8 text-sm sm:text-base text-gray-500">
+              <div className="text-center">
+                <div className="font-bold text-blue-600">20+</div>
+                <div>стран</div>
+              </div>
+              <div className="text-center">
+                <div className="font-bold text-purple-600">95%</div>
+                <div>довольных клиентов</div>
+              </div>
+              <div className="text-center">
+                <div className="font-bold text-green-600">24/7</div>
+                <div>поддержка</div>
+              </div>
+            </div>
           </div>
-        </AnimatedSection>
+        </div>
       </div>
     </section>
   );

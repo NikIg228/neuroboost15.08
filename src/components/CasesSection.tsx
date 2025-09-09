@@ -1,6 +1,5 @@
 import React from 'react';
 import { CheckCircle, TrendingUp, Users, DollarSign } from 'lucide-react';
-import AnimatedSection from './AnimatedSection';
 
 interface CaseStudy {
   id: string;
@@ -44,77 +43,62 @@ const CasesSection: React.FC = () => {
   ];
 
   return (
-    <section className="py-16 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <AnimatedSection>
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Наши <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">кейсы</span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Реальные результаты наших клиентов после внедрения ИИ-решений
-            </p>
-          </div>
-        </AnimatedSection>
+    <section className="py-16 sm:py-20 bg-gradient-to-br from-gray-50 via-white to-blue-50 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-900 to-purple-900 bg-clip-text text-transparent mb-4 sm:mb-6">
+            Наши <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">кейсы</span>
+          </h2>
+          <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+            Реальные результаты наших клиентов после внедрения ИИ-решений
+          </p>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {cases.map((caseStudy, index) => (
-            <AnimatedSection key={caseStudy.id} delay={index * 200}>
-              <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 h-full flex flex-col">
-                {/* Header with logo and icon */}
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-lg">
-                    {caseStudy.clientLogo}
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <CheckCircle className="h-5 w-5 text-green-500" />
-                    <span className="text-sm font-semibold text-green-600">Успешно</span>
-                  </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          {cases.map((caseStudy) => (
+            <div key={caseStudy.id} className="group bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/50 hover:shadow-2xl transition-all duration-500 p-6 sm:p-8 h-full flex flex-col">
+              {/* Header with logo and icon */}
+              <div className="flex items-center justify-between mb-4 sm:mb-6">
+                <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center text-white font-bold text-lg sm:text-xl shadow-lg group-hover:shadow-blue-500/25 transition-all duration-300">
+                  {caseStudy.clientLogo}
                 </div>
-
-                {/* Title */}
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
-                  {caseStudy.title}
-                </h3>
-
-                {/* Description */}
-                <p className="text-gray-600 mb-4 flex-grow">
-                  {caseStudy.description}
-                </p>
-
-                {/* Result */}
-                <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-4 mb-4">
-                  <div className="flex items-center mb-2">
-                    <caseStudy.icon className="h-5 w-5 text-blue-600 mr-2" />
-                    <span className="text-sm font-semibold text-blue-600">Результат:</span>
-                  </div>
-                  <p className="text-gray-800 font-medium">
-                    {caseStudy.result}
-                  </p>
-                </div>
-
-                {/* Metrics highlight */}
-                <div className="text-center">
-                  <span className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold rounded-full text-lg">
-                    📈 {caseStudy.metrics}
-                  </span>
+                <div className="flex items-center space-x-2 bg-green-100 px-3 py-1 rounded-full">
+                  <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-500" />
+                  <span className="text-xs sm:text-sm font-semibold text-green-600">Успешно</span>
                 </div>
               </div>
-            </AnimatedSection>
+
+              {/* Title */}
+              <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4 group-hover:text-blue-900 transition-colors duration-300">
+                {caseStudy.title}
+              </h3>
+
+              {/* Description */}
+              <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6 flex-grow leading-relaxed group-hover:text-gray-700 transition-colors duration-300">
+                {caseStudy.description}
+              </p>
+
+              {/* Result */}
+              <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-4 sm:p-5 mb-4 sm:mb-6 border border-blue-100 group-hover:border-blue-200 transition-colors duration-300">
+                <div className="flex items-center mb-2 sm:mb-3">
+                  <caseStudy.icon className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600 mr-2" />
+                  <span className="text-sm sm:text-base font-semibold text-blue-600">Результат:</span>
+                </div>
+                <p className="text-sm sm:text-base text-gray-800 font-medium leading-relaxed">
+                  {caseStudy.result}
+                </p>
+              </div>
+
+              {/* Metrics highlight */}
+              <div className="text-center">
+                <span className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold rounded-full text-base sm:text-lg shadow-lg group-hover:shadow-green-500/25 transition-all duration-300">
+                  📈 {caseStudy.metrics}
+                </span>
+              </div>
+            </div>
           ))}
         </div>
 
-        {/* CTA */}
-        <AnimatedSection delay={600}>
-          <div className="text-center mt-12">
-            <p className="text-gray-600 mb-6">
-              Хотите получить такие же результаты для своего бизнеса?
-            </p>
-            <button className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 transform hover:scale-105">
-              Обсудить ваш проект
-            </button>
-          </div>
-        </AnimatedSection>
       </div>
     </section>
   );

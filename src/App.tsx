@@ -5,6 +5,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ScrollToTopButton from './components/ScrollToTop';
+import { usePremiumScroll } from './hooks/usePremiumScroll';
 import Home from './pages/Home';
 import Catalog from './pages/Catalog';
 import Reviews from './pages/Reviews';
@@ -19,6 +20,9 @@ import Login from './pages/Login';
 import Profile from './pages/Profile';
 
 function App() {
+  // Инициализируем премиум скролл
+  usePremiumScroll();
+
   return (
     <AuthProvider>
       <Router>

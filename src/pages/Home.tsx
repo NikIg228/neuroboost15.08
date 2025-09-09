@@ -1,14 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Users, Clock, Award, Headphones, Globe, TrendingUp, Shield, Zap } from 'lucide-react';
+import { ArrowRight, Users, Clock, Headphones, Globe, Sparkles, Star } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import AnimatedSection from '../components/AnimatedSection';
-import AnimatedCounter from '../components/AnimatedCounter';
+import PremiumAnimatedSection from '../components/PremiumAnimatedSection';
 import AnimatedText from '../components/AnimatedText';
-import ParallaxSection from '../components/ParallaxSection';
-import NeuralBackground from '../components/NeuralBackground';
+import GeometricBackground from '../components/GeometricBackground';
 import ParticleBackground from '../components/ParticleBackground';
 import CasesSection from '../components/CasesSection';
 import PartnersSection from '../components/PartnersSection';
@@ -17,113 +15,125 @@ import PartnersSection from '../components/PartnersSection';
 
 const Home: React.FC = () => {
   const heroRef = useRef<HTMLDivElement>(null);
-  const statsRef = useRef<HTMLDivElement>(null);
 
-  const stats = [
-    { icon: Users, value: 100, suffix: '+', label: 'реализованных проектов' },
-    { icon: Clock, value: 5, suffix: ' дней', label: 'скорость внедрения' },
-    { icon: Award, value: 95, suffix: '%', label: 'довольных клиентов' },
-    { icon: Headphones, value: 24, suffix: '/7', label: 'техподдержка' }
-  ];
 
   useEffect(() => {
-    // Hero section animation
+    // Премиум Hero анимация
     if (heroRef.current) {
-      gsap.fromTo(heroRef.current, 
-        { opacity: 0, y: 50 },
+      const tl = gsap.timeline();
+      
+      // Анимация появления с эффектом масштабирования
+      tl.fromTo(heroRef.current, 
         { 
-          opacity: 1, 
-          y: 0, 
-          duration: 1.5, 
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: heroRef.current,
-            start: "top 80%",
-            toggleActions: "play none none reverse"
-          }
-        }
-      );
-    }
-
-    // Stats section animation
-    if (statsRef.current) {
-      gsap.fromTo(statsRef.current.children, 
-        { opacity: 0, y: 30, scale: 0.8 },
+          opacity: 0, 
+          y: 100, 
+          scale: 0.9,
+          filter: "blur(10px)"
+        },
         { 
           opacity: 1, 
           y: 0, 
           scale: 1,
-          duration: 0.8, 
-          ease: "back.out(1.7)",
-          stagger: 0.2,
-          scrollTrigger: {
-            trigger: statsRef.current,
-            start: "top 80%",
-            toggleActions: "play none none reverse"
-          }
+          filter: "blur(0px)",
+          duration: 2, 
+          ease: "power3.out"
         }
       );
+
+      // Дополнительные эффекты для премиум ощущения
+      tl.to(heroRef.current, {
+        boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1)",
+        duration: 1,
+        ease: "power2.out"
+      }, "-=1");
     }
+
 
     return () => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
   }, []);
 
-  const features = [
-    { icon: Globe, title: 'Глобальный охват', description: 'Работаем по всему СНГ и за его пределами' },
-    { icon: TrendingUp, title: 'Результативность', description: 'Гарантируем измеримые результаты внедрения' },
-    { icon: Shield, title: 'Надежность', description: 'Полная конфиденциальность ваших данных' },
-    { icon: Zap, title: 'Скорость', description: 'Быстрое внедрение и запуск решений' }
-  ];
 
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-50 via-white to-purple-50 py-12 sm:py-16 lg:py-20 overflow-hidden">
-        <NeuralBackground />
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <GeometricBackground />
         <ParticleBackground />
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/10 to-purple-900/10 pointer-events-none" style={{ zIndex: 1 }}></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedSection className="text-center relative" style={{ zIndex: 10 }}>
-            <div ref={heroRef} className="bg-white/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 shadow-lg">
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight">
+        
+        {/* Премиум градиентные оверлеи */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/10 to-pink-900/20 pointer-events-none" style={{ zIndex: 1 }}></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-black/10 pointer-events-none" style={{ zIndex: 2 }}></div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative" style={{ zIndex: 10 }}>
+          <PremiumAnimatedSection className="text-center" delay={0.3}>
+            <div ref={heroRef} className="bg-white/10 backdrop-blur-xl rounded-3xl sm:rounded-[2rem] p-6 sm:p-8 lg:p-12 shadow-2xl border border-white/20 relative overflow-hidden">
+              {/* Декоративные элементы */}
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl"></div>
+              <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-pink-400/20 to-orange-400/20 rounded-full blur-2xl"></div>
+              
+              <div className="relative z-10">
+                {/* Премиум бейдж */}
+                <motion.div 
+                  className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-sm border border-white/30 rounded-full px-4 py-2 mb-6"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5, duration: 0.8 }}
+                >
+                  <Sparkles className="h-4 w-4 text-blue-400" />
+                  <span className="text-sm font-medium text-white/90">Премиум ИИ-решения</span>
+                  <Star className="h-4 w-4 text-yellow-400" />
+                </motion.div>
+
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-6 sm:mb-8 leading-tight">
                 <AnimatedText 
                   text="Работаем по всему СНГ и за его пределами"
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
-                  delay={0.5}
-                  stagger={0.1}
+                    className="bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent"
+                    delay={0.8}
+                    stagger={0.05}
                 />
               </h1>
-              <p className="text-base sm:text-lg lg:text-xl text-gray-600 mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed">
+                
+                <p className="text-lg sm:text-xl lg:text-2xl text-white/80 mb-8 sm:mb-10 max-w-4xl mx-auto leading-relaxed">
                 Мы помогаем бизнесам внедрять ИИ-решения для автоматизации процессов, 
                 увеличения продаж и повышения эффективности работы. Более 20 стран доверяют нам.
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center relative z-20">
+                
+                <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center">
                 <motion.div
-                  whileHover={{ scale: 1.05, y: -2 }}
+                    whileHover={{ 
+                      scale: 1.05, 
+                      y: -5,
+                      boxShadow: "0 20px 40px rgba(59, 130, 246, 0.4)"
+                    }}
                   whileTap={{ scale: 0.95 }}
-                  transition={{ type: "spring", stiffness: 300 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
                   className="w-full sm:w-auto"
                 >
                 <Link
                   to="/catalog"
-                    className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg cursor-pointer text-sm sm:text-base w-full sm:w-auto"
+                      className="inline-flex items-center justify-center px-8 sm:px-10 py-4 sm:py-5 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold rounded-2xl cursor-pointer text-base sm:text-lg w-full sm:w-auto shadow-2xl hover:shadow-blue-500/25 transition-all duration-300"
                   style={{ pointerEvents: 'auto' }}
                 >
                   Посмотреть каталог
-                  <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+                      <ArrowRight className="ml-3 h-5 w-5 sm:h-6 sm:w-6" />
                 </Link>
                 </motion.div>
+                  
                 <motion.div
-                  whileHover={{ scale: 1.05, y: -2 }}
+                    whileHover={{ 
+                      scale: 1.05, 
+                      y: -5,
+                      backgroundColor: "rgba(255, 255, 255, 0.1)"
+                    }}
                   whileTap={{ scale: 0.95 }}
-                  transition={{ type: "spring", stiffness: 300 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
                   className="w-full sm:w-auto"
                 >
                 <Link
                   to="/contact"
-                  className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 border-2 border-blue-600 text-blue-600 font-semibold rounded-lg hover:bg-blue-600 hover:text-white transition-all duration-200 cursor-pointer text-sm sm:text-base w-full sm:w-auto"
+                      className="inline-flex items-center justify-center px-8 sm:px-10 py-4 sm:py-5 border-2 border-white/30 text-white font-bold rounded-2xl hover:bg-white/10 transition-all duration-300 cursor-pointer text-base sm:text-lg w-full sm:w-auto backdrop-blur-sm"
                   style={{ pointerEvents: 'auto' }}
                 >
                   Получить консультацию
@@ -131,79 +141,164 @@ const Home: React.FC = () => {
                 </motion.div>
               </div>
             </div>
-          </AnimatedSection>
+            </div>
+          </PremiumAnimatedSection>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-12 sm:py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div ref={statsRef} className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-            {stats.map((stat, index) => (
-              <AnimatedSection key={index} delay={index * 200} className="text-center">
-                <motion.div 
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4"
-                  whileHover={{ 
-                    scale: 1.1, 
-                    rotate: 360,
-                    transition: { duration: 0.5 }
-                  }}
+      {/* About Section */}
+      <section id="about" className="py-16 sm:py-20 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 relative overflow-hidden">
+        {/* Декоративные элементы */}
+        <div className="absolute top-0 left-0 w-full h-full">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-blue-400/10 to-purple-400/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-l from-pink-400/10 to-orange-400/10 rounded-full blur-2xl"></div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            <PremiumAnimatedSection direction="left" delay={0.3}>
+              <div className="space-y-6 sm:space-y-8">
+                <motion.div
+                  initial={{ opacity: 0, x: -50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  viewport={{ once: true }}
                 >
-                  <stat.icon className="h-5 w-5 sm:h-6 sm:w-6 lg:h-8 lg:w-8 text-white" />
+                  <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6">
+                    О нас
+                  </h2>
+                  <h3 className="text-xl sm:text-2xl text-blue-300 font-semibold mb-6 sm:mb-8">
+                Мы помогаем бизнесам внедрять ИИ
+              </h3>
                 </motion.div>
-                <AnimatedCounter 
-                  value={stat.value} 
-                  suffix={stat.suffix}
-                  className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-1 sm:mb-2"
-                  duration={2}
-                />
-                <div className="text-xs sm:text-sm lg:text-base text-gray-600 leading-tight">{stat.label}</div>
-              </AnimatedSection>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-12 sm:py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedSection className="text-center mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-              Почему выбирают нас
-            </h2>
-            <p className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Мы объединяем передовые технологии ИИ с глубоким пониманием бизнес-процессов
-            </p>
-          </AnimatedSection>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-            {features.map((feature, index) => (
-              <AnimatedSection key={index} delay={index * 150} direction="up">
-                <motion.div 
-                  className="bg-white rounded-xl p-4 sm:p-6 shadow-md text-center h-full"
-                  whileHover={{ 
-                    y: -10,
-                    scale: 1.02,
-                    boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-                    transition: { duration: 0.3 }
-                  }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <motion.div 
-                    className="bg-gradient-to-r from-blue-600 to-purple-600 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4"
-                    whileHover={{ 
-                      scale: 1.2,
-                      rotate: 360,
-                      transition: { duration: 0.5 }
-                    }}
+                
+                <div className="space-y-4 sm:space-y-6 text-gray-300 text-base sm:text-lg leading-relaxed">
+                  <motion.div
+                    initial={{ opacity: 0, x: -30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                    viewport={{ once: true }}
+                    className="bg-white/5 backdrop-blur-sm rounded-xl p-4 sm:p-6 border border-white/10"
                   >
-                    <feature.icon className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+                    <p>
+                      <span className="text-blue-300 font-bold">Кто мы:</span> NeuroBoost — команда экспертов по искусственному интеллекту 
+                  и автоматизации бизнес-процессов. Мы специализируемся на внедрении ИИ-решений 
+                  для компаний любого масштаба.
+                </p>
                   </motion.div>
-                  <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2">{feature.title}</h3>
-                  <p className="text-sm sm:text-base text-gray-600 leading-relaxed">{feature.description}</p>
+                  
+                  <motion.div
+                    initial={{ opacity: 0, x: -30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: 0.4 }}
+                    viewport={{ once: true }}
+                    className="bg-white/5 backdrop-blur-sm rounded-xl p-4 sm:p-6 border border-white/10"
+                  >
+                    <p>
+                      <span className="text-purple-300 font-bold">Чем занимаемся:</span> Разрабатываем и внедряем индивидуальные ИИ-решения: 
+                  от чат-ботов и автоматизации до полной цифровой трансформации бизнеса.
+                </p>
+                  </motion.div>
+                  
+                  <motion.div
+                    initial={{ opacity: 0, x: -30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: 0.6 }}
+                    viewport={{ once: true }}
+                    className="bg-white/5 backdrop-blur-sm rounded-xl p-4 sm:p-6 border border-white/10"
+                  >
+                    <p>
+                      <span className="text-pink-300 font-bold">В чем наше отличие:</span> Мы не просто поставщики технологий — мы партнеры 
+                  в вашем развитии. Каждое решение адаптируется под специфику вашего бизнеса.
+                </p>
+                  </motion.div>
+                  
+                  <motion.div
+                    initial={{ opacity: 0, x: -30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: 0.8 }}
+                    viewport={{ once: true }}
+                    className="bg-white/5 backdrop-blur-sm rounded-xl p-4 sm:p-6 border border-white/10"
+                  >
+                    <p>
+                      <span className="text-orange-300 font-bold">Для кого:</span> Наши услуги предназначены для руководителей и владельцев 
+                  бизнеса, которые стремятся оптимизировать процессы и повысить эффективность.
+                </p>
+                  </motion.div>
+                </div>
+              </div>
+            </PremiumAnimatedSection>
+
+            <PremiumAnimatedSection direction="right" delay={0.5}>
+              <motion.div 
+                className="bg-white/10 backdrop-blur-xl rounded-3xl p-6 sm:p-8 lg:p-10 border border-white/20 shadow-2xl"
+                whileHover={{ scale: 1.02, y: -10 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              >
+                <div className="grid grid-cols-2 gap-6 sm:gap-8">
+                  <motion.div 
+                    className="text-center group"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  >
+                    <div className="bg-gradient-to-r from-blue-500 to-blue-600 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                      <Users className="h-8 w-8 text-white" />
+                  </div>
+                    <div className="text-3xl sm:text-4xl font-bold text-white mb-2">100+</div>
+                    <div className="text-sm sm:text-base text-blue-200">реализованных проектов</div>
+                  </motion.div>
+                  
+                  <motion.div 
+                    className="text-center group"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  >
+                    <div className="bg-gradient-to-r from-purple-500 to-purple-600 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                      <Clock className="h-8 w-8 text-white" />
+                  </div>
+                    <div className="text-3xl sm:text-4xl font-bold text-white mb-2">от 5 дней</div>
+                    <div className="text-sm sm:text-base text-purple-200">скорость внедрения</div>
+                  </motion.div>
+                  
+                  <motion.div 
+                    className="text-center group"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  >
+                    <div className="bg-gradient-to-r from-pink-500 to-pink-600 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                      <Globe className="h-8 w-8 text-white" />
+                  </div>
+                    <div className="text-3xl sm:text-4xl font-bold text-white mb-2">20+</div>
+                    <div className="text-sm sm:text-base text-pink-200">стран с нами</div>
+                  </motion.div>
+                  
+                  <motion.div 
+                    className="text-center group"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  >
+                    <div className="bg-gradient-to-r from-orange-500 to-orange-600 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                      <Headphones className="h-8 w-8 text-white" />
+                  </div>
+                    <div className="text-3xl sm:text-4xl font-bold text-white mb-2">24/7</div>
+                    <div className="text-sm sm:text-base text-orange-200">поддержка</div>
+                  </motion.div>
+                </div>
+                
+                <motion.div 
+                  className="mt-8 sm:mt-10 text-center"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.5 }}
+                  viewport={{ once: true }}
+                >
+                  <p className="text-lg sm:text-xl text-white font-semibold">
+                    Команда из инженеров и маркетологов
+                  </p>
+                  <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full mx-auto mt-4"></div>
                 </motion.div>
-              </AnimatedSection>
-            ))}
+              </motion.div>
+            </PremiumAnimatedSection>
           </div>
         </div>
       </section>
@@ -214,90 +309,116 @@ const Home: React.FC = () => {
       {/* Partners Section */}
       <PartnersSection />
 
-      {/* About Section */}
-      <section id="about" className="py-12 sm:py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            <AnimatedSection direction="left">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">О нас</h2>
-              <h3 className="text-lg sm:text-xl text-blue-600 font-semibold mb-3 sm:mb-4">
-                Мы помогаем бизнесам внедрять ИИ
-              </h3>
-              
-              <div className="space-y-3 sm:space-y-4 text-gray-600 text-sm sm:text-base">
-                <p>
-                  <strong>Кто мы:</strong> NeuroBoost — команда экспертов по искусственному интеллекту 
-                  и автоматизации бизнес-процессов. Мы специализируемся на внедрении ИИ-решений 
-                  для компаний любого масштаба.
-                </p>
-                
-                <p>
-                  <strong>Чем занимаемся:</strong> Разрабатываем и внедряем индивидуальные ИИ-решения: 
-                  от чат-ботов и автоматизации до полной цифровой трансформации бизнеса.
-                </p>
-                
-                <p>
-                  <strong>В чем наше отличие:</strong> Мы не просто поставщики технологий — мы партнеры 
-                  в вашем развитии. Каждое решение адаптируется под специфику вашего бизнеса.
-                </p>
-                
-                <p>
-                  <strong>Для кого:</strong> Наши услуги предназначены для руководителей и владельцев 
-                  бизнеса, которые стремятся оптимизировать процессы и повысить эффективность.
-                </p>
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection direction="right">
-              <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-4 sm:p-6 lg:p-8">
-                <div className="grid grid-cols-2 gap-4 sm:gap-6">
-                  <div className="text-center">
-                    <div className="text-2xl sm:text-3xl font-bold text-blue-600 mb-1 sm:mb-2">100+</div>
-                    <div className="text-xs sm:text-sm text-gray-600">реализованных проектов</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl sm:text-3xl font-bold text-purple-600 mb-1 sm:mb-2">от 5 дней</div>
-                    <div className="text-xs sm:text-sm text-gray-600">скорость внедрения</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl sm:text-3xl font-bold text-blue-600 mb-1 sm:mb-2">20+</div>
-                    <div className="text-xs sm:text-sm text-gray-600">стран с нами</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl sm:text-3xl font-bold text-purple-600 mb-1 sm:mb-2">24/7</div>
-                    <div className="text-xs sm:text-sm text-gray-600">поддержка</div>
-                  </div>
-                </div>
-                
-                <div className="mt-6 sm:mt-8 text-center">
-                  <p className="text-sm sm:text-base text-gray-700 font-semibold">
-                    Команда из инженеров и маркетологов
-                  </p>
-                </div>
-              </div>
-            </AnimatedSection>
-          </div>
-        </div>
-      </section>
-
       {/* CTA Section */}
-      <section className="py-12 sm:py-16 bg-gradient-to-r from-blue-600 to-purple-600">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <AnimatedSection>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-3 sm:mb-4 leading-tight">
+      <section className="py-16 sm:py-20 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 relative overflow-hidden">
+        {/* Декоративные элементы */}
+        <div className="absolute top-0 left-0 w-full h-full">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-white/5 rounded-full blur-2xl"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-white/5 rounded-full blur-xl"></div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
+          <PremiumAnimatedSection delay={0.3}>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94] }}
+              viewport={{ once: true }}
+              className="bg-white/10 backdrop-blur-xl rounded-3xl p-8 sm:p-12 lg:p-16 border border-white/20 shadow-2xl"
+            >
+              {/* Премиум бейдж */}
+              <motion.div 
+                className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-6 py-3 mb-8"
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+                viewport={{ once: true }}
+              >
+                <Sparkles className="h-5 w-5 text-yellow-300" />
+                <span className="text-base font-bold text-white">Эксклюзивное предложение</span>
+                <Star className="h-5 w-5 text-yellow-300" />
+              </motion.div>
+
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-6 sm:mb-8 leading-tight">
               Готовы начать цифровую трансформацию?
             </h2>
-            <p className="text-base sm:text-lg lg:text-xl text-blue-100 mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed">
+              
+              <p className="text-lg sm:text-xl lg:text-2xl text-white/90 mb-10 sm:mb-12 max-w-4xl mx-auto leading-relaxed">
               Получите бесплатную консультацию и узнайте, как ИИ может изменить ваш бизнес
             </p>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.7 }}
+                viewport={{ once: true }}
+                className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center"
+              >
+                <motion.div
+                  whileHover={{ 
+                    scale: 1.05, 
+                    y: -5,
+                    boxShadow: "0 25px 50px rgba(255, 255, 255, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                >
             <Link
               to="/contact"
-              className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-white text-blue-600 font-semibold rounded-lg hover:bg-gray-100 transition-all duration-200 transform hover:scale-105 text-sm sm:text-base"
+                    className="inline-flex items-center justify-center px-10 sm:px-12 py-5 sm:py-6 bg-white text-blue-600 font-bold rounded-2xl hover:bg-gray-100 transition-all duration-300 text-lg sm:text-xl shadow-2xl hover:shadow-white/25"
             >
               Получить консультацию
-              <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+                    <ArrowRight className="ml-3 h-6 w-6" />
+                  </Link>
+                </motion.div>
+                
+                <motion.div
+                  whileHover={{ 
+                    scale: 1.05, 
+                    y: -5,
+                    backgroundColor: "rgba(255, 255, 255, 0.1)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                >
+                  <Link
+                    to="/catalog"
+                    className="inline-flex items-center justify-center px-10 sm:px-12 py-5 sm:py-6 border-2 border-white/50 text-white font-bold rounded-2xl hover:bg-white/10 transition-all duration-300 text-lg sm:text-xl backdrop-blur-sm"
+                  >
+                    Посмотреть каталог
             </Link>
-          </AnimatedSection>
+                </motion.div>
+              </motion.div>
+              
+              {/* Дополнительная информация */}
+              <motion.div 
+                className="mt-12 sm:mt-16"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 1 }}
+                viewport={{ once: true }}
+              >
+                <p className="text-sm sm:text-base text-white/70 mb-4">
+                  Бесплатная консультация • Персональный подход • Гарантия результата
+                </p>
+                <div className="flex justify-center space-x-8">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-white">15 мин</div>
+                    <div className="text-xs text-white/70">время консультации</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-white">100%</div>
+                    <div className="text-xs text-white/70">конфиденциальность</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-white">24/7</div>
+                    <div className="text-xs text-white/70">поддержка</div>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          </PremiumAnimatedSection>
         </div>
       </section>
     </div>
