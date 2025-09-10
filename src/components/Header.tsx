@@ -11,6 +11,7 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   const { user, signOut } = useAuth();
   const [isConsultationModalOpen, setIsConsultationModalOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navItems = [
     { path: '/catalog', label: 'Каталог' },
@@ -39,6 +40,7 @@ const Header: React.FC = () => {
     });
     // Переходим по ссылке
     navigate(path);
+    setIsMobileMenuOpen(false);
   };
 
   return (
@@ -74,12 +76,12 @@ const Header: React.FC = () => {
             </div>
           </motion.button>
 
-          <nav className="hidden md:flex space-x-8">
+          <nav className="hidden md:flex items-center space-x-4 lg:space-x-8">
             {navItems.map((item, index) => (
               <motion.button
                 key={item.path}
                 onClick={() => handleLinkClick(item.path)}
-                className={`text-sm font-medium transition-colors duration-200 hover:text-blue-600 relative group ${
+                className={`text-sm lg:text-base font-medium transition-colors duration-200 hover:text-blue-600 relative group ${
                   location.pathname === item.path
                     ? 'text-blue-600'
                     : 'text-gray-700'
@@ -101,47 +103,47 @@ const Header: React.FC = () => {
             ))}
           </nav>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-3 sm:space-x-4">
             {user ? (
-              <div className="flex items-center space-x-4">
+              <div className="hidden md:flex items-center space-x-3 md:space-x-4">
                 <button
                   onClick={handleConsultation}
-                  className="flex items-center px-3 py-2 text-sm font-medium text-green-600 hover:text-green-800 transition-colors border border-green-600 rounded-lg hover:bg-green-50"
+                  className="hidden sm:flex items-center px-3 py-2 text-sm font-medium text-green-600 hover:text-green-800 transition-colors border border-green-600 rounded-lg hover:bg-green-50"
                 >
                   <MessageCircle className="h-4 w-4 mr-1" />
                   Консультация
                 </button>
                 <button
                   onClick={() => handleLinkClick('/lk')}
-                  className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
+                  className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors hidden md:inline"
                 >
                   Личный кабинет
                 </button>
                 <button
                   onClick={handleSignOut}
-                  className="text-sm font-medium text-gray-700 hover:text-red-600 transition-colors"
+                  className="text-sm font-medium text-gray-700 hover:text-red-600 transition-colors hidden md:inline"
                 >
                   Выйти
                 </button>
               </div>
             ) : (
-              <div className="flex items-center space-x-4">
+              <div className="hidden md:flex items-center space-x-3 md:space-x-4">
                 <button
                   onClick={() => window.location.href = '/login'}
-                  className="flex items-center px-3 py-2 text-sm font-medium text-green-600 hover:text-green-800 transition-colors border border-green-600 rounded-lg hover:bg-green-50"
+                  className="hidden sm:flex items-center px-3 py-2 text-sm font-medium text-green-600 hover:text-green-800 transition-colors border border-green-600 rounded-lg hover:bg-green-50"
                 >
                   <MessageCircle className="h-4 w-4 mr-1" />
                   Консультация
                 </button>
                 <button
                   onClick={() => handleLinkClick('/login')}
-                  className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
+                  className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors hidden md:inline"
                 >
                   Войти
                 </button>
                 <button
                   onClick={() => handleLinkClick('/register')}
-                  className="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-medium rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all"
+                  className="hidden md:inline px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-medium rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all"
                 >
                   Регистрация
                 </button>
@@ -149,7 +151,11 @@ const Header: React.FC = () => {
             )}
             
             <div className="md:hidden">
-              <button className="text-gray-700 hover:text-blue-600 transition-colors">
+              <button 
+                className="text-gray-700 hover:text-blue-600 transition-colors"
+                aria-label="Открыть меню"
+                onClick={() => setIsMobileMenuOpen((v) => !v)}
+              >
                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
@@ -159,6 +165,40 @@ const Header: React.FC = () => {
         </div>
       </div>
       </motion.header>
+
+      {/* Мобильное меню */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden bg-white/95 backdrop-blur-sm border-b border-gray-100 shadow-sm">
+          <div className="max-w-7xl mx-auto px-4 py-3 space-y-2">
+            {navItems.map((item) => (
+              <button
+                key={item.path}
+                onClick={() => handleLinkClick(item.path)}
+                className={`w-full text-left px-3 py-3 rounded-lg text-sm font-medium transition-colors ${
+                  location.pathname === item.path ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50'
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
+            <div className="pt-2 grid grid-cols-2 gap-2">
+              {user ? (
+                <>
+                  <button onClick={handleConsultation} className="px-3 py-2 text-sm font-medium text-green-600 border border-green-600 rounded-lg hover:bg-green-50">Консультация</button>
+                  <button onClick={() => handleLinkClick('/lk')} className="px-3 py-2 text-sm font-medium text-gray-700 border rounded-lg hover:bg-gray-50">Личный кабинет</button>
+                  <button onClick={handleSignOut} className="col-span-2 px-3 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700">Выйти</button>
+                </>
+              ) : (
+                <>
+                  <button onClick={() => window.location.href = '/login'} className="px-3 py-2 text-sm font-medium text-green-600 border border-green-600 rounded-lg hover:bg-green-50">Консультация</button>
+                  <button onClick={() => handleLinkClick('/login')} className="px-3 py-2 text-sm font-medium text-gray-700 border rounded-lg hover:bg-gray-50">Войти</button>
+                  <button onClick={() => handleLinkClick('/register')} className="col-span-2 px-3 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg hover:from-blue-700 hover:to-purple-700">Регистрация</button>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       <ConsultationModal
         isOpen={isConsultationModalOpen}

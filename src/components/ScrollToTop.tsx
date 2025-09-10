@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronUp } from 'lucide-react';
-import { usePremiumScroll } from '../hooks/usePremiumScroll';
+// Используем нативный smooth scroll, чтобы избежать задержек
 
 const ScrollToTopButton: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const { scrollToTop } = usePremiumScroll();
+  // Без внешних зависимостей, максимально отзывчиво
 
   useEffect(() => {
     const toggleVisibility = () => {
@@ -21,7 +21,8 @@ const ScrollToTopButton: React.FC = () => {
   }, []);
 
   const handleScrollToTop = () => {
-    scrollToTop();
+    // Мгновенная реакция + нативная плавность
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
