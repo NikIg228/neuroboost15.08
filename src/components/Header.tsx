@@ -166,38 +166,125 @@ const Header: React.FC = () => {
       </div>
       </motion.header>
 
-      {/* Мобильное меню */}
+      {/* Мобильное меню - полноэкранный оверлей */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-white/95 backdrop-blur-sm border-b border-gray-100 shadow-sm">
-          <div className="max-w-7xl mx-auto px-4 py-3 space-y-2">
-            {navItems.map((item) => (
+        <motion.div 
+          className="fixed inset-0 z-50 md:hidden"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+        >
+          {/* Затемненный фон */}
+          <div 
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+          
+          {/* Меню панель */}
+          <motion.div 
+            className="absolute top-0 right-0 h-full w-80 max-w-[85vw] bg-white shadow-2xl"
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+          >
+            {/* Заголовок с кнопкой закрытия */}
+            <div className="flex items-center justify-between p-4 border-b border-gray-200">
+              <div className="flex items-center space-x-3">
+                <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-2 rounded-lg">
+                  <Brain className="h-5 w-5 text-white" />
+                </div>
+                <span className="text-lg font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  NeuroBoost
+                </span>
+              </div>
               <button
-                key={item.path}
-                onClick={() => handleLinkClick(item.path)}
-                className={`w-full text-left px-3 py-3 rounded-lg text-sm font-medium transition-colors ${
-                  location.pathname === item.path ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50'
-                }`}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+                aria-label="Закрыть меню"
               >
-                {item.label}
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
               </button>
-            ))}
-            <div className="pt-2 grid grid-cols-2 gap-2">
-              {user ? (
-                <>
-                  <button onClick={handleConsultation} className="px-3 py-2 text-sm font-medium text-green-600 border border-green-600 rounded-lg hover:bg-green-50">Консультация</button>
-                  <button onClick={() => handleLinkClick('/lk')} className="px-3 py-2 text-sm font-medium text-gray-700 border rounded-lg hover:bg-gray-50">Личный кабинет</button>
-                  <button onClick={handleSignOut} className="col-span-2 px-3 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700">Выйти</button>
-                </>
-              ) : (
-                <>
-                  <button onClick={() => window.location.href = '/login'} className="px-3 py-2 text-sm font-medium text-green-600 border border-green-600 rounded-lg hover:bg-green-50">Консультация</button>
-                  <button onClick={() => handleLinkClick('/login')} className="px-3 py-2 text-sm font-medium text-gray-700 border rounded-lg hover:bg-gray-50">Войти</button>
-                  <button onClick={() => handleLinkClick('/register')} className="col-span-2 px-3 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg hover:from-blue-700 hover:to-purple-700">Регистрация</button>
-                </>
-              )}
             </div>
-          </div>
-        </div>
+
+            {/* Навигация */}
+            <div className="p-4 space-y-2">
+              <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+                Навигация
+              </div>
+              {navItems.map((item) => (
+                <button
+                  key={item.path}
+                  onClick={() => handleLinkClick(item.path)}
+                  className={`w-full text-left px-4 py-3 rounded-xl text-base font-medium transition-all duration-200 ${
+                    location.pathname === item.path 
+                      ? 'bg-blue-50 text-blue-700 border border-blue-200' 
+                      : 'text-gray-700 hover:bg-gray-50 hover:text-blue-600'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Кнопки действий */}
+            <div className="p-4 border-t border-gray-200">
+              <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+                Аккаунт
+              </div>
+              <div className="space-y-3">
+                {user ? (
+                  <>
+                    <button 
+                      onClick={handleConsultation} 
+                      className="w-full flex items-center justify-center px-4 py-3 text-base font-medium text-green-600 border border-green-600 rounded-xl hover:bg-green-50 transition-colors"
+                    >
+                      <MessageCircle className="h-5 w-5 mr-2" />
+                      Консультация
+                    </button>
+                    <button 
+                      onClick={() => handleLinkClick('/lk')} 
+                      className="w-full px-4 py-3 text-base font-medium text-gray-700 border border-gray-300 rounded-xl hover:bg-gray-50 transition-colors"
+                    >
+                      Личный кабинет
+                    </button>
+                    <button 
+                      onClick={handleSignOut} 
+                      className="w-full px-4 py-3 text-base font-medium text-white bg-red-600 rounded-xl hover:bg-red-700 transition-colors"
+                    >
+                      Выйти
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button 
+                      onClick={() => window.location.href = '/login'} 
+                      className="w-full flex items-center justify-center px-4 py-3 text-base font-medium text-green-600 border border-green-600 rounded-xl hover:bg-green-50 transition-colors"
+                    >
+                      <MessageCircle className="h-5 w-5 mr-2" />
+                      Консультация
+                    </button>
+                    <button 
+                      onClick={() => handleLinkClick('/login')} 
+                      className="w-full px-4 py-3 text-base font-medium text-gray-700 border border-gray-300 rounded-xl hover:bg-gray-50 transition-colors"
+                    >
+                      Войти
+                    </button>
+                    <button 
+                      onClick={() => handleLinkClick('/register')} 
+                      className="w-full px-4 py-3 text-base font-medium text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all"
+                    >
+                      Регистрация
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
       )}
 
       <ConsultationModal
