@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronUp } from 'lucide-react';
+import { useChatbot } from '../contexts/ChatbotContext';
 // Используем нативный smooth scroll, чтобы избежать задержек
 
 const ScrollToTopButton: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const { isOpen } = useChatbot();
   // Без внешних зависимостей, максимально отзывчиво
 
   useEffect(() => {
@@ -27,14 +29,15 @@ const ScrollToTopButton: React.FC = () => {
 
   return (
     <AnimatePresence>
-      {isVisible && (
+      {isVisible && !isOpen && (
         <motion.button
           onClick={handleScrollToTop}
-          className="fixed bottom-8 right-8 z-50 p-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-2xl shadow-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 backdrop-blur-sm border border-white/20"
+          className="fixed bottom-20 right-6 z-[60] p-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-2xl shadow-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 backdrop-blur-sm border border-white/20"
           aria-label="Scroll to top"
           initial={{ scale: 0, opacity: 0, y: 20 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0, opacity: 0, y: 20 }}
+          key="scroll-to-top"
           whileHover={{ 
             scale: 1.1,
             y: -5,

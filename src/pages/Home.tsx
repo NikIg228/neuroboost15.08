@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Users, Clock, Headphones, Globe, Sparkles, Star } from 'lucide-react';
+import { ArrowRight, Users, Clock, Headphones, Globe, Sparkles, Star, MessageCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -296,6 +296,318 @@ const Home: React.FC = () => {
                     Команда из инженеров и маркетологов
                   </p>
                   <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full mx-auto mt-4"></div>
+                </motion.div>
+              </motion.div>
+            </PremiumAnimatedSection>
+          </div>
+        </div>
+      </section>
+
+      {/* AI Chatbot Section */}
+      <section className="py-16 sm:py-20 bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 relative overflow-hidden">
+        {/* Декоративные элементы */}
+        <div className="absolute top-0 left-0 w-full h-full">
+          <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-cyan-400/20 to-blue-400/20 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-1/4 left-1/4 w-80 h-80 bg-gradient-to-l from-pink-400/20 to-purple-400/20 rounded-full blur-2xl"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-yellow-400/10 to-orange-400/10 rounded-full blur-xl"></div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {/* Левая часть - описание */}
+            <PremiumAnimatedSection direction="left" delay={0.3}>
+              <div className="space-y-6 sm:space-y-8">
+                <motion.div
+                  initial={{ opacity: 0, x: -50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  viewport={{ once: true }}
+                >
+                  <div className="inline-flex items-center gap-2 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 backdrop-blur-sm border border-cyan-400/30 rounded-full px-4 py-2 mb-6">
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                    >
+                      <Sparkles className="h-4 w-4 text-cyan-400" />
+                    </motion.div>
+                    <span className="text-sm font-medium text-cyan-300">ИИ-Помощник</span>
+                    <Star className="h-4 w-4 text-yellow-400" />
+                  </div>
+                  
+                  <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6">
+                    <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+                      Умный чат-бот
+                    </span>
+                    <br />
+                    <span className="text-white">для консультаций</span>
+                  </h2>
+                  
+                  <p className="text-lg sm:text-xl text-gray-300 leading-relaxed">
+                    Получите мгновенные ответы на вопросы о наших услугах, ценах и возможностях ИИ-решений. 
+                    Наш ИИ-помощник работает 24/7 и готов помочь в любое время!
+                  </p>
+                </motion.div>
+                
+                <div className="space-y-4 sm:space-y-6">
+                  <motion.div
+                    initial={{ opacity: 0, x: -30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                    viewport={{ once: true }}
+                    className="bg-white/5 backdrop-blur-sm rounded-xl p-4 sm:p-6 border border-cyan-400/20"
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="bg-gradient-to-r from-cyan-500 to-blue-500 w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <MessageCircle className="h-4 w-4 text-white" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-2">Мгновенные ответы</h3>
+                        <p className="text-gray-300 text-sm sm:text-base">
+                          Получайте ответы на вопросы о наших услугах, ценах и возможностях в режиме реального времени
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                  
+                  <motion.div
+                    initial={{ opacity: 0, x: -30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: 0.4 }}
+                    viewport={{ once: true }}
+                    className="bg-white/5 backdrop-blur-sm rounded-xl p-4 sm:p-6 border border-purple-400/20"
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="bg-gradient-to-r from-purple-500 to-pink-500 w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <Clock className="h-4 w-4 text-white" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-2">Работает 24/7</h3>
+                        <p className="text-gray-300 text-sm sm:text-base">
+                          Наш ИИ-помощник доступен круглосуточно и готов ответить на ваши вопросы в любое время
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                  
+                  <motion.div
+                    initial={{ opacity: 0, x: -30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: 0.6 }}
+                    viewport={{ once: true }}
+                    className="bg-white/5 backdrop-blur-sm rounded-xl p-4 sm:p-6 border border-pink-400/20"
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="bg-gradient-to-r from-pink-500 to-orange-500 w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <Headphones className="h-4 w-4 text-white" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-2">Персональный подход</h3>
+                        <p className="text-gray-300 text-sm sm:text-base">
+                          ИИ адаптируется под ваши потребности и дает рекомендации, подходящие именно вашему бизнесу
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
+                
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.8 }}
+                  viewport={{ once: true }}
+                  className="pt-4"
+                >
+                  <div className="inline-flex items-center gap-2 text-cyan-300 text-sm font-medium">
+                    <motion.div
+                      animate={{ x: [0, 5, 0] }}
+                      transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                    >
+                      <ArrowRight className="h-4 w-4" />
+                    </motion.div>
+                    <span>Нажмите на кнопку справа, чтобы начать диалог</span>
+                  </div>
+                </motion.div>
+              </div>
+            </PremiumAnimatedSection>
+
+            {/* Правая часть - визуализация */}
+            <PremiumAnimatedSection direction="right" delay={0.5}>
+              <motion.div 
+                className="relative"
+                whileHover={{ scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              >
+                {/* Основной контейнер чата */}
+                <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-6 sm:p-8 border border-white/20 shadow-2xl relative overflow-hidden">
+                  {/* Декоративные элементы */}
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-cyan-400/20 to-blue-400/20 rounded-full blur-2xl"></div>
+                  <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-pink-400/20 to-purple-400/20 rounded-full blur-xl"></div>
+                  
+                  {/* Заголовок чата */}
+                  <div className="flex items-center gap-3 mb-6 relative z-10">
+                    <motion.div
+                      animate={{ 
+                        scale: [1, 1.1, 1],
+                        rotate: [0, 5, -5, 0]
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }}
+                      className="bg-gradient-to-r from-cyan-500 to-blue-500 w-12 h-12 rounded-full flex items-center justify-center"
+                    >
+                      <MessageCircle className="h-6 w-6 text-white" />
+                    </motion.div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-white">ИИ-Помощник NeuroBoost</h3>
+                      <p className="text-sm text-cyan-300">Онлайн • Готов помочь</p>
+                    </div>
+                    <motion.div
+                      className="ml-auto w-3 h-3 bg-green-400 rounded-full"
+                      animate={{ 
+                        scale: [1, 1.2, 1],
+                        opacity: [1, 0.5, 1]
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }}
+                    />
+                  </div>
+                  
+                  {/* Сообщения чата */}
+                  <div className="space-y-4 relative z-10">
+                    <motion.div
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 1, duration: 0.5 }}
+                      className="flex items-start gap-3"
+                    >
+                      <div className="bg-gradient-to-r from-cyan-500 to-blue-500 w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">
+                        <MessageCircle className="h-4 w-4 text-white" />
+                      </div>
+                      <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-4 py-3 max-w-xs">
+                        <p className="text-white text-sm">Привет! Я ваш ИИ-помощник. Чем могу помочь?</p>
+                      </div>
+                    </motion.div>
+                    
+                    <motion.div
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 1.5, duration: 0.5 }}
+                      className="flex items-start gap-3 justify-end"
+                    >
+                      <div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl px-4 py-3 max-w-xs">
+                        <p className="text-white text-sm">Расскажите про ваши услуги</p>
+                      </div>
+                      <div className="bg-gradient-to-r from-purple-500 to-pink-500 w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">
+                        <Users className="h-4 w-4 text-white" />
+                      </div>
+                    </motion.div>
+                    
+                    <motion.div
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 2, duration: 0.5 }}
+                      className="flex items-start gap-3"
+                    >
+                      <div className="bg-gradient-to-r from-cyan-500 to-blue-500 w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">
+                        <MessageCircle className="h-4 w-4 text-white" />
+                      </div>
+                      <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-4 py-3 max-w-xs">
+                        <p className="text-white text-sm">У нас есть 20+ ИИ-решений для автоматизации вашего бизнеса!</p>
+                      </div>
+                    </motion.div>
+                    
+                    {/* Индикатор печати */}
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 2.5, duration: 0.5 }}
+                      className="flex items-start gap-3"
+                    >
+                      <div className="bg-gradient-to-r from-cyan-500 to-blue-500 w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">
+                        <MessageCircle className="h-4 w-4 text-white" />
+                      </div>
+                      <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-4 py-3">
+                        <div className="flex space-x-1">
+                          <motion.div
+                            className="w-2 h-2 bg-white/60 rounded-full"
+                            animate={{ scale: [1, 1.2, 1] }}
+                            transition={{ duration: 0.6, repeat: Infinity, delay: 0 }}
+                          />
+                          <motion.div
+                            className="w-2 h-2 bg-white/60 rounded-full"
+                            animate={{ scale: [1, 1.2, 1] }}
+                            transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }}
+                          />
+                          <motion.div
+                            className="w-2 h-2 bg-white/60 rounded-full"
+                            animate={{ scale: [1, 1.2, 1] }}
+                            transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }}
+                          />
+                        </div>
+                      </div>
+                    </motion.div>
+                  </div>
+                  
+                  {/* Поле ввода */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 3, duration: 0.5 }}
+                    className="mt-6 relative z-10"
+                  >
+                    <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-2xl px-4 py-3 border border-white/20">
+                      <input
+                        type="text"
+                        placeholder="Напишите ваш вопрос..."
+                        className="flex-1 bg-transparent text-white placeholder-gray-300 text-sm focus:outline-none"
+                        disabled
+                      />
+                      <motion.button
+                        className="bg-gradient-to-r from-cyan-500 to-blue-500 p-2 rounded-xl"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                      >
+                        <ArrowRight className="h-4 w-4 text-white" />
+                      </motion.button>
+                    </div>
+                  </motion.div>
+                </div>
+                
+                {/* Плавающие элементы */}
+                <motion.div
+                  className="absolute -top-4 -right-4 w-8 h-8 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full flex items-center justify-center"
+                  animate={{ 
+                    y: [0, -10, 0],
+                    rotate: [0, 180, 360]
+                  }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                >
+                  <Star className="h-4 w-4 text-white" />
+                </motion.div>
+                
+                <motion.div
+                  className="absolute -bottom-4 -left-4 w-6 h-6 bg-gradient-to-r from-pink-400 to-purple-400 rounded-full flex items-center justify-center"
+                  animate={{ 
+                    y: [0, 10, 0],
+                    x: [0, 5, 0]
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 1
+                  }}
+                >
+                  <Sparkles className="h-3 w-3 text-white" />
                 </motion.div>
               </motion.div>
             </PremiumAnimatedSection>

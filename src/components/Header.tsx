@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
 import { Brain, MessageCircle } from 'lucide-react';
@@ -54,7 +54,7 @@ const Header: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <motion.button 
-            onClick={() => handleLinkClick('/')} 
+            onClick={() => window.location.href = '/'} 
             className="flex items-center space-x-3 group"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -191,14 +191,17 @@ const Header: React.FC = () => {
           >
             {/* Заголовок с кнопкой закрытия */}
             <div className="flex items-center justify-between p-4 border-b border-gray-200">
-              <div className="flex items-center space-x-3">
+              <button 
+                onClick={() => window.location.href = '/'}
+                className="flex items-center space-x-3 group"
+              >
                 <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-2 rounded-lg">
                   <Brain className="h-5 w-5 text-white" />
                 </div>
                 <span className="text-lg font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   NeuroBoost
                 </span>
-              </div>
+              </button>
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
