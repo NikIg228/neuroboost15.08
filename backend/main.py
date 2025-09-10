@@ -6,6 +6,10 @@ import os
 import re
 from typing import Dict, List, Any
 import openai
+from dotenv import load_dotenv
+
+# Загружаем переменные окружения
+load_dotenv()
 
 app = FastAPI(title="NeuroBoost Chatbot API", version="1.0.0")
 
@@ -122,13 +126,20 @@ def is_website_related(message: str, data: Dict[str, Any]) -> bool:
 # Функция для вызова OpenRouter API
 async def call_openrouter_api(message: str) -> str:
     try:
-        # Настройка OpenRouter API
-        openai.api_key = "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"
-        openai.api_base = "https://openrouter.ai/api/v1"
+        # Настройка OpenRouter API из переменных окружения
+        api_key = os.getenv("OPENROUTER_API_KEY")
+        api_base = os.getenv("OPENROUTER_API_BASE", "https://openrouter.ai/api/v1")
+        model = os.getenv("OPENAI_MODEL", "openai/gpt-5")
+        
+        if not api_key:
+            return "Ошибка: API ключ не настроен. Создайте файл .env в папке backend и добавьте OPENROUTER_API_KEY=ваш_ключ"
+        
+        openai.api_key = api_key
+        openai.api_base = api_base
         
         # Вызов GPT-5 через OpenRouter
         response = await openai.ChatCompletion.acreate(
-            model="openai/gpt-5",
+            model=model,
             messages=[
                 {"role": "system", "content": "Ты умный помощник NeuroBoost, специализирующийся на ИИ-решениях для бизнеса. Отвечай на русском языке, будь дружелюбным и профессиональным. Если вопрос не связан с ИИ или бизнесом, отвечай кратко и вежливо."},
                 {"role": "user", "content": message}
