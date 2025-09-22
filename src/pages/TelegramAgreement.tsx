@@ -114,7 +114,7 @@ const TelegramAgreement: React.FC = () => {
                 без предварительного уведомления. Актуальная редакция всегда доступна по адресу:
                 <br />
                 <a href="https://gorgeous-creponne-26d474.netlify.app/telegram-agreement" className="text-blue-600 hover:text-blue-800">
-                  https://gorgeous-creponne-26d474.netlify.app/telegram-agreement
+                 https://www.neuroboost.kz/telegram-agreement
                 </a>
               </p>
 
